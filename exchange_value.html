@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 10px;
+      }
+      
+      .currencyBlock, .markupBlock {
+        width: 100%;
+        display: table;
+      }
+      .markupBlock {
+        padding: 5px;
+        text-align: center;
+      }
+      .currencyLeft {
+        width: 50%;
+        display: table-cell;
+        padding: 5px;
+      }
+      .currencyRight {
+        width: 50%;
+        display: table-cell;
+        padding: 5px;
+      }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="currencyBlock">
+      <div class="currencyLeft">
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="fromv">З валюти</span>
+          <select id="fromCurrency" class="form-control" aria-describedby="fromv">
+            <option value="UAH" selected>UAH</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+          </select>
+        </div>
+      </div>
+      <div class="currencyRight">
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="tov">В валюту</span>
+          <select id="toCurrency" class="form-control" aria-describedby="tov">
+            <option value="UAH" selected>UAH</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="markupBlock">
+      <div class="input-group mb-3">
+        <input type="number" class="form-control" placeholder="Націнка" aria-label="Націнка" aria-describedby="markup2" id="markup">
+        <span class="input-group-text" id="markup2">%</span>
+      </div>
+      <button onclick="confirmExchange()" class="btn btn-primary">Підтвердити</button>
+    </div>
+
+    <script>
+      function confirmExchange() {
+        let currencies = {};
+        currencies.from = document.getElementById('fromCurrency').value;
+        currencies.to = document.getElementById('toCurrency').value;
+        let markup = document.getElementById('markup').value;
+
+        google.script.run.exchangeValue(currencies, markup);
+        google.script.host.close();
+      }
+    </script>
+  </body>
+</html>

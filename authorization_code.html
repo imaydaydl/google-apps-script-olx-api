@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 10px;
+      }
+      
+      .codeButtonBlock, .inputCodeBlock {
+        width: 100%;
+        display: table;
+        text-align: center;
+        padding: 5px;
+      }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="codeButtonBlock">
+      <button class="btn btn-primary" onclick="openCodeUrl()">Отримати код</button>
+    </div>
+    <div class="inputCodeBlock">
+      <input type="text" class="form-control" id="authorizeCode" placeholder="Код">
+    </div>
+    <div class="codeButtonBlock">
+      <button class="btn btn-primary" onclick="getAuthorizeToken()">Отримати токен</button>
+    </div>
+
+    <script>
+      function openCodeUrl() {
+        window.open('https://www.olx.' + <?= c ?> + '/oauth/authorize/?client_id=200567&response_type=code&scope=read+write+v2', '_blank');
+      }
+
+      function getAuthorizeToken() {
+        let code = document.getElementById('authorizeCode').value;
+
+        google.script.run.getAuthorizeToken(code, <?= c ?>);
+        google.script.host.close();
+      }
+    </script>
+  </body>
+</html>
